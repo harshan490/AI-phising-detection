@@ -1,0 +1,37 @@
+{
+  "dataset": "Kaggle 'Phishing Email Dataset' (Naser Abdullah Alam): CEAS_08.csv, Enron.csv, Ling.csv, Nazario.csv, Nigerian_Fraud.csv, SpamAssasin.csv",
+  "timestamp": "2026-10-01T14:17:22.600510+00:00",
+  "train_size": 65490,
+  "test_size": 16373,
+  "phishing_ratio": 0.5206,
+  "calibrated": false,
+  "accuracy": 0.9936,
+  "precision": 0.9927,
+  "recall": 0.9951,
+  "f1": 0.9939,
+  "roc_auc": 0.9997,
+  "confusion_matrix": {
+    "labels": [
+      "legitimate",
+      "phishing"
+    ],
+    "matrix": [
+      [
+        7787,
+        62
+      ],
+      [
+        42,
+        8482
+      ]
+    ]
+  },
+  "per_source_rows": {
+    "phising-email-dataset.zip:CEAS_08.csv": 38943,
+    "phising-email-dataset.zip:Enron.csv": 29433,
+    "phising-email-dataset.zip:SpamAssasin.csv": 5791,
+    "phising-email-dataset.zip:Nigerian_Fraud.csv": 3289,
+    "phising-email-dataset.zip:Ling.csv": 2855,
+    "phising-email-dataset.zip:Nazario.csv": 1552
+  }
+}
