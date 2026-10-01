@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { FiShield } from 'react-icons/fi';
 import { motion } from 'framer-motion';
+import { errorMessage } from '../utils/api';
 
 const SignupPage = () => {
   const [fullName, setFullName] = useState('');
@@ -22,7 +23,7 @@ const SignupPage = () => {
       await register(email, password, fullName);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Registration failed. Please try again.');
+      setError(errorMessage(err, 'Registration failed. Please try again.'));
     } finally {
       setIsLoading(false);
     }
@@ -78,6 +79,7 @@ const SignupPage = () => {
             <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
             <input 
               type="password" 
+                minLength={8}
               required
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all placeholder-gray-500"
               placeholder="••••••••"

@@ -2,13 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FiActivity, FiCheck, FiCircle } from 'react-icons/fi';
 
+// Mirrors the real backend pipeline in app/services/scan_pipeline.py
 const STEPS = [
-  { id: 'init', label: 'Initializing' },
-  { id: 'parsing', label: 'Header & Body Parsing' },
-  { id: 'heuristics', label: 'Heuristics & Auth' },
-  { id: 'threat_intel', label: 'Threat Intel Lookup' },
-  { id: 'ml_prediction', label: 'ML Prediction' },
-  { id: 'xai', label: 'XAI Generation' },
+  { id: 'init', label: 'Upload received' },
+  { id: 'parsing', label: 'Header, Body & URL Parsing' },
+  { id: 'heuristics', label: 'Phishing Heuristics & SPF/DKIM/DMARC' },
+  { id: 'threat_intel', label: 'Threat Intel (local blocklist)' },
+  { id: 'ml_prediction', label: 'AI Text Model (TF-IDF + LR)' },
+  { id: 'risk', label: 'Risk Scoring & Explanation' },
   { id: 'done', label: 'Completed' }
 ];
 
@@ -44,7 +45,6 @@ const ScanningProgress = ({ status, currentStep, logs }) => {
           {STEPS.map((step, index) => {
             const isCompleted = index < currentIndex || currentStep === 'done';
             const isActive = index === currentIndex && status !== 'failed';
-            const isPending = index > currentIndex;
 
             let textColor = "text-gray-500";
             if (isCompleted) textColor = "text-primary font-medium";

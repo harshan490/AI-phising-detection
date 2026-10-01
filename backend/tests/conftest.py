@@ -11,8 +11,9 @@ os.environ["URLHAUS_AUTH_KEY"] = ""
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-REPO = Path(__file__).resolve().parents[2]
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
-SCAM_EML = next(REPO.glob("*30,000,000 USD*.eml"))
-DISCORD_EML = REPO / "Discord Password Changed.eml"
+# Real received emails with the recipient's identifiers and tracking tokens removed
+# (see fixtures/redact_samples.py).
+SCAM_EML = FIXTURES / "real_scam_lottery_redacted.eml"
+DISCORD_EML = FIXTURES / "real_discord_password_changed_redacted.eml"
 LOOKALIKE_EML = FIXTURES / "lookalike_paypal.eml"

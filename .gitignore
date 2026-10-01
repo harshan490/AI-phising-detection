@@ -8,3 +8,8 @@ frontend/dist/
 backend/ml/data/*.zip
 venv/
 .venv/
+
+# Real personal emails stay local (redacted copies live in backend/tests/fixtures)
+/*.eml
+*.pptx
+phishing_demo.db

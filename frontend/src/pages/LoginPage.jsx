@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { FiShield } from 'react-icons/fi';
 import { motion } from 'framer-motion';
+import { errorMessage } from '../utils/api';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -21,7 +22,7 @@ const LoginPage = () => {
       await login(email, password);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Authentication failed. Please check credentials.');
+      setError(errorMessage(err, 'Authentication failed. Please check credentials.'));
     } finally {
       setIsLoading(false);
     }

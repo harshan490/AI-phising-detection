@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import UploadZone from '../components/scanner/UploadZone';
 import ScanResults from '../components/scanner/ScanResults';
 import ScanningProgress from '../components/scanner/ScanningProgress';
-import api from '../utils/api';
-import { FiLoader, FiSearch } from 'react-icons/fi';
+import api, { errorMessage } from '../utils/api';
+import { FiSearch, FiRefreshCw } from 'react-icons/fi';
 
 const EmailScannerPage = () => {
   const [file, setFile] = useState(null);
@@ -31,11 +31,13 @@ const EmailScannerPage = () => {
             clearInterval(intervalId);
           } else if (res.data.status === 'failed') {
             setIsScanning(false);
-            setError("Scan pipeline failed. Check logs for details.");
+            setError("Scan pipeline failed.");
             clearInterval(intervalId);
           }
         } catch (err) {
-          console.error("Polling error:", err);
+          setIsScanning(false);
+          setError(errorMessage(err, 'Could not fetch scan status.'));
+          clearInterval(intervalId);
         }
       }, 1000); // Poll every 1 second
     }
@@ -45,13 +47,21 @@ const EmailScannerPage = () => {
     };
   }, [scanId, isScanning]);
 
+  const reset = () => {
+    setFile(null);
+    setScanId(null);
+    setStatusObj(null);
+    setResults(null);
+    setError(null);
+  };
+
   const handleScan = async () => {
     if (!file) return;
     
     setIsScanning(true);
     setError(null);
     setResults(null);
-    setStatusObj({ status: 'processing', current_step: 'init', logs: ['System: Submitting file to queue...'] });
+    setStatusObj({ status: 'processing', current_step: 'init', logs: ['[System] Uploading file to the analysis API...'] });
     
     try {
       const formData = new FormData();
@@ -64,7 +74,7 @@ const EmailScannerPage = () => {
       setScanId(response.data.scan_id);
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.detail || err.message || 'An error occurred during scanning.');
+      setError(errorMessage(err, 'An error occurred during scanning.'));
       setIsScanning(false);
     }
   };
@@ -93,7 +103,7 @@ const EmailScannerPage = () => {
           </div>
         )}
 
-        {(isScanning || statusObj?.status === 'failed') && statusObj && (
+        {statusObj && (
           <ScanningProgress 
             status={statusObj.status} 
             currentStep={statusObj.current_step} 
@@ -109,6 +119,15 @@ const EmailScannerPage = () => {
 
         {results && !isScanning && (
           <ScanResults results={results} />
+        )}
+
+        {(results || error) && !isScanning && (
+          <div className="flex justify-center">
+            <button onClick={reset} className="glass-button-primary px-10 py-4 text-lg flex items-center gap-3">
+              <FiRefreshCw className="text-xl" />
+              Scan another email
+            </button>
+          </div>
         )}
       </div>
     </div>
