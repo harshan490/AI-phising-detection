@@ -1,0 +1,7 @@
+# Local offline blocklist: one domain per line (registrable domain or full host).
+# Matching a host or its registrable domain raises the scan risk to >= 90.
+# The entries below are DEMO entries used by the test fixtures, not live intel.
+# Refresh with real feeds (e.g. URLhaus / PhishTank / OpenPhish exports) before real use.
+paypal-update-security.com
+verify-account-now.com
+login-microsoft-auth.com

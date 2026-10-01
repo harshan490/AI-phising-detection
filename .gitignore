@@ -6,3 +6,5 @@ __pycache__/
 backend/ml/data/*.csv
 frontend/dist/
 backend/ml/data/*.zip
+venv/
+.venv/
