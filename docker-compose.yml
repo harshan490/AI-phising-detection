@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:15
@@ -14,26 +12,19 @@ services:
       - postgres_data:/var/lib/postgresql/data
     restart: always
 
-  redis:
-    image: redis:7
-    container_name: phishing_redis
-    ports:
-      - "6379:6379"
-    restart: always
-
   backend:
     build: ./backend
     container_name: phishing_backend
     ports:
       - "8000:8000"
     environment:
-      - POSTGRES_SERVER=db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=phishing_db
+      - JWT_SECRET=${JWT_SECRET:?Set JWT_SECRET in your shell or a .env file next to docker-compose.yml}
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/phishing_db
+      - FRONTEND_ORIGINS=http://localhost:5173
+      - VT_API_KEY=${VT_API_KEY:-}
+      - URLHAUS_AUTH_KEY=${URLHAUS_AUTH_KEY:-}
     depends_on:
       - db
-      - redis
     restart: always
 
   frontend:
