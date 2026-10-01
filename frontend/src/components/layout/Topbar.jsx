@@ -48,7 +48,7 @@ const Topbar = () => {
 
           <div className="flex items-center gap-4">
             <div className="text-right hidden sm:block">
-              <p className="text-sm font-semibold text-white leading-tight">{user?.full_name || 'Admin User'}</p>
+              <p className="text-sm font-semibold text-white leading-tight">{user?.full_name || user?.email}</p>
               <p className="text-xs text-primary/80">{user?.role || 'Analyst'}</p>
             </div>
             <div className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white/80 hover:bg-white/20 transition-colors cursor-pointer shadow-sm">

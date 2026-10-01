@@ -102,6 +102,9 @@ const AnalyticsPage = () => {
         </Panel>
 
         <Panel icon={<FiDatabase className="text-secondary" />} title="Indicators of Compromise" className="lg:col-span-3" delay={0.5}>
+          <p className="text-gray-500 text-xs -mt-3 mb-4">
+            Every domain, URL, IP and attachment hash seen in scanned emails. The verdict is that of the worst email it appeared in, not a verdict on the indicator itself.
+          </p>
           {iocs.length ? (
             <div className="overflow-x-auto max-h-[480px] overflow-y-auto">
               <table className="w-full text-left text-sm">
@@ -110,7 +113,7 @@ const AnalyticsPage = () => {
                     <th className="px-4 py-3 font-medium">Value</th>
                     <th className="px-4 py-3 font-medium">Type</th>
                     <th className="px-4 py-3 font-medium text-right">Hits</th>
-                    <th className="px-4 py-3 font-medium text-right">Worst verdict</th>
+                    <th className="px-4 py-3 font-medium text-right">Seen in (worst email verdict)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5">
